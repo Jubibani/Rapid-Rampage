@@ -10,7 +10,7 @@ config_version=5
 
 [application]
 
-config/name="Game Development"
+config/name="gamedevelopment"
 run/main_scene="res://firing_range.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://icon.svg"
@@ -43,6 +43,11 @@ jump={
 ]
 }
 
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
 [rendering]
 
 renderer/rendering_method="mobile"
+textures/vram_compression/import_etc2_astc=true

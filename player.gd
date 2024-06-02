@@ -1,10 +1,10 @@
 extends RigidBody3D
 
-
+@onready var head = $head/Camera3D
 # Called when the node enters the scene tree for the first time.
 func _ready():
-	pass # Replace with function body.
-
+	pass
+	
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
@@ -24,3 +24,17 @@ func _process(delta):
 	if Input.is_action_pressed("jump"):
 		force += transform.basis.y * jump_strength * delta
 	apply_central_force(force)
+
+func _input(event):
+	if event is InputEventMouseMotion:
+		var look_sensitivity = 0.5
+		rotate_y(deg_to_rad(-event.relative.x * look_sensitivity))
+		$head.rotate_x(deg_to_rad(-event.relative.y * look_sensitivity))
+		
+		var head_rotation = $head.rotation_degrees
+		head_rotation.x -= event.relative.y * look_sensitivity
+		head_rotation.x = clamp(head_rotation.x, -90, 90)
+		$head.rotation_degrees = head_rotation
+		
+		
+	
