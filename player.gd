@@ -26,7 +26,7 @@ func _process(delta):
 	apply_central_force(force)
 
 func _input(event):
-	if event is InputEventMouseMotion:
+	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
 		rotate_y(deg_to_rad(-event.relative.x * look_sensitivity))
 		$head.rotate_x(deg_to_rad(-event.relative.y * look_sensitivity))
