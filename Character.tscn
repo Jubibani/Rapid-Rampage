@@ -185,20 +185,26 @@ anchor_left = 1.0
 anchor_top = 0.5
 anchor_right = 1.0
 anchor_bottom = 0.5
-offset_left = -268.0
-offset_top = -48.0
-offset_bottom = 60.0
+offset_left = -298.0
+offset_top = -155.0
+offset_bottom = 191.0
 grow_horizontal = 0
 grow_vertical = 2
 
 [node name="jump" type="TouchScreenButton" parent="Control/buttons"]
-position = Vector2(117, 5)
+position = Vector2(172, 3)
 scale = Vector2(0.0859375, 0.0917969)
 texture_normal = ExtResource("5_qb477")
 shape = SubResource("CircleShape2D_a2wg5")
 
 [node name="run" type="TouchScreenButton" parent="Control/buttons"]
-position = Vector2(10, 5)
+position = Vector2(58, 4)
+scale = Vector2(0.0859375, 0.0917969)
+texture_normal = ExtResource("5_qb477")
+shape = SubResource("CircleShape2D_a2wg5")
+
+[node name="crouch" type="TouchScreenButton" parent="Control/buttons"]
+position = Vector2(119, 117)
 scale = Vector2(0.0859375, 0.0917969)
 texture_normal = ExtResource("5_qb477")
 shape = SubResource("CircleShape2D_a2wg5")
@@ -210,3 +216,4 @@ libraries = {
 
 [connection signal="pressed" from="Control/buttons/jump" to="." method="_on_jump_pressed"]
 [connection signal="pressed" from="Control/buttons/run" to="." method="_on_run_pressed"]
+[connection signal="pressed" from="Control/buttons/crouch" to="." method="_on_crouch_pressed"]
