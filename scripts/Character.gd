@@ -1,12 +1,14 @@
 extends CharacterBody3D
 
 @export var animation_player : AnimationPlayer
-@export_range(5.0, 5.0, 10.0)var crouching_animation_speed = 5.0
+@export_range(5.0, 5.0, 10.0)var animation_speed = 5.0
 var SPEED = walking_speed
 
 var is_running : bool = false
 var is_crouching : bool = false
+var is_proning : bool = false
 
+const proning_speed = 1.0
 const crouching_speed = 2.3
 const walking_speed = 5.5
 const running_speed = 12.5
@@ -15,6 +17,7 @@ const JUMP_VELOCITY = 4.5
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
  
+
 func _input(event):
 	
 	if Input.is_action_just_pressed("run") and is_on_floor():
@@ -25,10 +28,17 @@ func _input(event):
 	if Input.is_action_just_pressed("crouch") and is_on_floor():
 		if !is_crouching:
 			_crouch()
-		else:
+		elif is_crouching:
 			_uncrouch()
 		is_crouching = !is_crouching
 		
+		
+	if Input.is_action_pressed("prone") and is_on_floor():
+		if !is_proning:
+			_prone()
+		elif is_proning:
+			_unprone()
+		is_proning = !is_proning
 	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
 		rotate_y(deg_to_rad(-event.relative.x * look_sensitivity))
@@ -64,27 +74,51 @@ func _physics_process(delta):
 
 #Handle Movements
 func _crouch():
-	if !is_crouching:
-		animation_player.play("CROUCHING", -1, crouching_animation_speed)
+	if !is_crouching and is_on_floor(): #from stand to crouch
+		animation_player.play("CROUCHING", -1, animation_speed)
 		SPEED = crouching_speed
 		print("is crouching at the speed of: ", SPEED)
-	
+		
+	elif is_proning and is_on_floor(): #from prone to crouch
+		animation_player.play("CrouchProne", -1, -animation_speed, true)
+		print("from prone to crouch")
+
+		
 func _uncrouch():
-	if is_crouching:
-		animation_player.play("CROUCHING", -1, -crouching_animation_speed, true)
-		SPEED = walking_speed 
+	if is_crouching and !is_proning and is_on_floor(): #from crouch to stand
+		animation_player.play("CROUCHING", -1, -animation_speed, true)
+		SPEED = walking_speed
 		print("is not crouching at the speed of: ", SPEED)
+			
+		
+func _prone():
+	if !is_proning:
+		animation_player.play("StandProne", -1, animation_speed)
+		SPEED = proning_speed
+		print("from Stand to prone")
+
+
+func _unprone():
+	if is_proning: #from prone to stand
+		animation_player.play("StandProne", -1, -animation_speed, true)
+		SPEED = walking_speed
+		print("from prone to stand")
+	
 
 func _run():
-	if !is_crouching:
-		if !is_running:
-			SPEED = running_speed
-			print("running at the speed of: ", SPEED)					
-		elif is_crouching:
+	if !is_crouching and !is_running:
+		SPEED = running_speed
+		print("running at the speed of: ", SPEED)
+		
+		if is_crouching:
 			SPEED = crouching_speed
+		
 		elif is_running:
 			SPEED = walking_speed
 			print("walking at the speed of: ", SPEED)
+	elif SPEED == walking_speed:
+		SPEED = running_speed
+		print("running at the speed of: ", SPEED)
 	else:
 		SPEED = walking_speed
 		print("from run(), and walking at the speed of: ", SPEED)	
