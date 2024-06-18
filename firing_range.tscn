@@ -101,7 +101,7 @@ tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
 tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
-tracks/3/interp = 1
+tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 1),
@@ -110,7 +110,7 @@ tracks/3/keys = {
 "values": [2.0, 1.5]
 }
 
-[sub_resource type="Animation" id="Animation_ldxvq"]
+[sub_resource type="Animation" id="Animation_f1usf"]
 resource_name = "CrouchProne"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -127,26 +127,26 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/1/path = NodePath("CollisionShape3D:position")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [1.5, 1.0]
+"values": [Vector3(0, 0.75, 0), Vector3(0, 0.25, 0)]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 0.75, 0), Vector3(0, 0.25, 0)]
+"values": [1.5, 1.0]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
@@ -158,7 +158,7 @@ tracks/3/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 1, 0), Vector3(0, 0.25, 0)]
+"values": [Vector3(0, 1, 0), Vector3(0, -0.22, 0)]
 }
 
 [sub_resource type="Animation" id="Animation_wypav"]
@@ -212,7 +212,7 @@ tracks/3/keys = {
 "values": [2.0]
 }
 
-[sub_resource type="Animation" id="Animation_48blb"]
+[sub_resource type="Animation" id="Animation_48ycb"]
 resource_name = "StandProne"
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -229,46 +229,46 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
 tracks/1/interp = 2
 tracks/1/loop_wrap = true
 tracks/1/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 1, 0), Vector3(0, 0.25, 0)]
+"values": [2.0, 1.0]
 }
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("head/Camera3D:position")
+tracks/2/path = NodePath("CollisionShape3D:position")
 tracks/2/interp = 2
 tracks/2/loop_wrap = true
 tracks/2/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [Vector3(0, 1.5, 0), Vector3(0, -0.22, 0)]
+"values": [Vector3(0, 1, 0), Vector3(0, 0.25, 0)]
 }
 tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
-tracks/3/interp = 1
+tracks/3/path = NodePath("head/Camera3D:position")
+tracks/3/interp = 2
 tracks/3/loop_wrap = true
 tracks/3/keys = {
 "times": PackedFloat32Array(0, 1),
 "transitions": PackedFloat32Array(1, 1),
 "update": 0,
-"values": [2.0, 1.0]
+"values": [Vector3(0, 1.5, 0), Vector3(0, -0.22, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_wna7o"]
 _data = {
 "CROUCHING": SubResource("Animation_n2m2p"),
-"CrouchProne": SubResource("Animation_ldxvq"),
+"CrouchProne": SubResource("Animation_f1usf"),
 "RESET": SubResource("Animation_wypav"),
-"StandProne": SubResource("Animation_48blb")
+"StandProne": SubResource("Animation_48ycb")
 }
 
 [node name="world" type="Node3D"]
@@ -706,4 +706,3 @@ libraries = {
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/jump" to="CharacterBody3D" method="_on_jump_pressed"]
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/run" to="CharacterBody3D" method="_on_run_pressed"]
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/crouch" to="CharacterBody3D" method="_on_crouch_pressed"]
-[connection signal="animation_started" from="CharacterBody3D/AnimationPlayer" to="CharacterBody3D" method="_on_animation_player_animation_started"]
