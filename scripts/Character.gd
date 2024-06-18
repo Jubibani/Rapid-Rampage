@@ -1,14 +1,12 @@
 extends CharacterBody3D
 
 @export var animation_player : AnimationPlayer
-@export_range(5.0, 5.0, 10.0)var animation_speed = 5.0
+@export_range(5.0, 5.0, 10.0)var crouching_animation_speed = 5.0
 var SPEED = walking_speed
 
 var is_running : bool = false
 var is_crouching : bool = false
-var is_proning : bool = false
 
-const proning_speed = 1.8
 const crouching_speed = 2.3
 const walking_speed = 5.5
 const running_speed = 12.5
@@ -30,14 +28,6 @@ func _input(event):
 		else:
 			_uncrouch()
 		is_crouching = !is_crouching
-	
-	if Input.is_action_just_pressed("prone") and is_on_floor():
-		if !is_proning:
-			_prone()
-		else:
-			_unprone()
-		is_proning = !is_proning
-		
 		
 	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
@@ -75,41 +65,26 @@ func _physics_process(delta):
 #Handle Movements
 func _crouch():
 	if !is_crouching:
-		animation_player.play("CROUCHING", -1, animation_speed)
+		animation_player.play("CROUCHING", -1, crouching_animation_speed)
 		SPEED = crouching_speed
 		print("is crouching at the speed of: ", SPEED)
 	
 func _uncrouch():
 	if is_crouching:
-		animation_player.play("CROUCHING", -1, -animation_speed, true)
+		animation_player.play("CROUCHING", -1, -crouching_animation_speed, true)
 		SPEED = walking_speed 
 		print("is not crouching at the speed of: ", SPEED)
-
-func _prone():
-	if !is_proning:
-		animation_player.play("StandProne", -1, animation_speed)
-		SPEED = proning_speed
-		print("we are proned at the speed of: ", SPEED)
-	
-func _unprone():
-	if is_proning:
-		animation_player.play("StandProne", -1, -animation_speed, true)
-		SPEED = walking_speed
-		print("we are unproned at the speed of: ", SPEED)
 
 func _run():
 	if !is_crouching:
 		if !is_running:
 			SPEED = running_speed
-			print("running at the speed of: ", SPEED)
+			print("running at the speed of: ", SPEED)					
 		elif is_crouching:
 			SPEED = crouching_speed
 		elif is_running:
 			SPEED = walking_speed
 			print("walking at the speed of: ", SPEED)
-	elif SPEED == walking_speed:
-		SPEED = running_speed
-		print("running at the speed of: ", SPEED)	
 	else:
 		SPEED = walking_speed
 		print("from run(), and walking at the speed of: ", SPEED)	
