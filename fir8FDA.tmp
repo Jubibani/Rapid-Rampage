@@ -597,6 +597,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24092, 0)
 script = ExtResource("6_l5uo7")
 state_machine = NodePath("StateMachine")
 animation_player = NodePath("AnimationPlayer")
+animation_speed = null
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -707,10 +708,8 @@ libraries = {
 "": SubResource("AnimationLibrary_wna7o")
 }
 
-[node name="StateMachine" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("initial_state", "current_state")]
+[node name="StateMachine" type="Node" parent="CharacterBody3D"]
 script = ExtResource("11_8yu2e")
-initial_state = NodePath("standing")
-current_state = NodePath("standing")
 
 [node name="standing" type="Node" parent="CharacterBody3D/StateMachine"]
 script = ExtResource("12_vd8s4")

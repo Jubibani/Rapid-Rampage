@@ -1,5 +1,7 @@
 extends CharacterBody3D
+class_name CharacterPlayer
 
+@export var state_machine : StateMachine
 @export var animation_player: AnimationPlayer
 @export_range(5.0, 10.0) var animation_speed = 5.0
 
@@ -20,15 +22,20 @@ const JUMP_VELOCITY = 4.5
 
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
+func _unhandled_input(event):
+	if Input.is_action_pressed("crouch"):
+		state_machine.handle_input(event)
+
 func _input(event):
-	if Input.is_action_just_pressed("crouch") and is_on_floor():
-		match current_state:
-			State.STANDING:
-				_crouch()
-			State.CROUCHING:
-				_prone() # Changed from _uncrouch()
-			State.PRONE:
-				_uncrouch() # Added
+	#if Input.is_action_just_pressed("crouch") and is_on_floor():
+		#state_machine
+		#match current_state:
+			#State.STANDING:
+				#_crouch()
+			#State.CROUCHING:
+				#_prone() # Changed from _uncrouch()
+			#State.PRONE:
+				#_uncrouch() # Added
 
 	if Input.is_action_just_pressed("prone") and is_on_floor():
 		match current_state:
@@ -56,6 +63,7 @@ func _input(event):
 		$head.rotation_degrees = head_rotation
 
 func _physics_process(delta):
+	state_machine.update(delta)
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
