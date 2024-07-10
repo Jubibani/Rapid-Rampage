@@ -1,7 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://di2kh0kotif87"]
 
-[ext_resource type="Script" path="res://player.gd" id="1_7suw2"]
-[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="2_7hh70"]
+[ext_resource type="PackedScene" uid="uid://dmr0fcamx7t56" path="res://addons/virtual_joystick/virtual_joystick_scene.tscn" id="1_o1jco"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_doymv"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -24,6 +23,62 @@ size = Vector2(10, 10)
 
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_a4akr"]
 data = PackedVector3Array(5, 0, 5, -5, 0, 5, 5, 0, -5, -5, 0, 5, -5, 0, -5, 5, 0, -5)
+
+[sub_resource type="GDScript" id="GDScript_nirso"]
+script/source = "extends RigidBody3D
+
+@onready var head = $head/Camera3D
+# Called when the node enters the scene tree for the first time.
+func _ready():
+	pass
+	
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta):
+	var move_speed := 1000.0
+	var max_speed := 10.0
+	var jump_strength := 1000.0
+	var force := Vector3.ZERO
+	
+	if Input.is_action_pressed(\"forward\"):
+		force += -transform.basis.z * move_speed * delta
+	if Input.is_action_pressed(\"backward\"):
+		force += transform.basis.z * move_speed * delta
+	if Input.is_action_pressed(\"left\"):
+		force += -transform.basis.x * move_speed * delta
+	if Input.is_action_pressed(\"right\"):
+		force += transform.basis.x * move_speed * delta
+	
+	if Input.is_action_pressed(\"jump\"):
+		force += transform.basis.y * jump_strength * delta
+	apply_central_force(force)
+	
+	#clamping
+	move_speed = linear_velocity.length()
+	move_speed = clamp(move_speed,0,max_speed)
+	
+	#limit
+	if linear_velocity.length() > max_speed:
+		linear_velocity = linear_velocity.normalized() * max_speed
+	
+	
+	print(\"move speed: \", move_speed)
+	print(\"max speed: \", max_speed)
+
+func _input(event):
+	if event is InputEventScreenDrag:
+		var look_sensitivity = 0.5
+		rotate_y(deg_to_rad(-event.relative.x * look_sensitivity))
+		$head.rotate_x(deg_to_rad(-event.relative.y * look_sensitivity))
+		
+		var head_rotation = $head.rotation_degrees
+		head_rotation.x -= event.relative.y * look_sensitivity
+		head_rotation.x = clamp(head_rotation.x, -90, 90)
+		$head.rotation_degrees = head_rotation
+		
+		
+	
+"
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ngry5"]
 albedo_color = Color(0.247059, 0.266667, 1, 1)
@@ -55,7 +110,7 @@ shape = SubResource("ConcavePolygonShape3D_a4akr")
 [node name="player" type="RigidBody3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.61561, 0)
 lock_rotation = true
-script = ExtResource("1_7suw2")
+script = SubResource("GDScript_nirso")
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="player"]
 material_override = SubResource("StandardMaterial3D_ngry5")
@@ -79,7 +134,7 @@ offset_bottom = 40.0
 
 [node name="UI" type="CanvasLayer" parent="player/Control/Test"]
 
-[node name="Virtual joystick left" parent="player/Control/Test/UI" instance=ExtResource("2_7hh70")]
+[node name="Virtual joystick left" parent="player/Control/Test/UI" instance=ExtResource("1_o1jco")]
 offset_left = 43.0
 offset_top = -357.0
 offset_right = 492.0
