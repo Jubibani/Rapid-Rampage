@@ -1,12 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://d4fe48l2la7q4"]
+[gd_scene load_steps=18 format=3 uid="uid://d4fe48l2la7q4"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_s3myh"]
 [ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="2_es7v7"]
 [ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="3_fqwsi"]
 [ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://addons/virtual_joystick/textures/joystick_tip_arrows.png" id="4_6yeay"]
 [ext_resource type="Texture2D" uid="uid://dyb5duilp42dk" path="res://assets/Mobile-Controls/UI/UI_Circle_Bevel_Base.png" id="5_g7gby"]
-[ext_resource type="Script" path="res://scripts/state_machine.gd" id="6_kpmp3"]
-[ext_resource type="Script" path="res://scripts/Idle.gd" id="7_b5vqw"]
+[ext_resource type="Script" path="res://scripts/StateMachine.gd" id="6_yeg7c"]
+[ext_resource type="Script" path="res://scripts/Stand.gd" id="7_gcssx"]
+[ext_resource type="Script" path="res://scripts/Crouch.gd" id="8_50scc"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nwh1x"]
 
@@ -345,14 +346,13 @@ libraries = {
 }
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("6_kpmp3")
+script = ExtResource("6_yeg7c")
 
-[node name="Idle" type="Node" parent="StateMachine"]
-script = ExtResource("7_b5vqw")
+[node name="Stand" type="Node" parent="StateMachine"]
+script = ExtResource("7_gcssx")
 
-[node name="Standing" type="Node" parent="StateMachine"]
-
-[node name="Proning" type="Node" parent="StateMachine"]
+[node name="Crouch" type="Node" parent="StateMachine"]
+script = ExtResource("8_50scc")
 
 [connection signal="pressed" from="Control/buttons/jump" to="." method="_on_jump_pressed"]
 [connection signal="pressed" from="Control/buttons/run" to="." method="_on_run_pressed"]

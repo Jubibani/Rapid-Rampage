@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=3 uid="uid://blu6csip2k6k"]
+[gd_scene load_steps=31 format=3 uid="uid://blu6csip2k6k"]
 
 [ext_resource type="Texture2D" uid="uid://dy4ve5ftibvjk" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_09.png" id="1_pywyy"]
 [ext_resource type="Texture2D" uid="uid://7hrukxyxqqsj" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_08.png" id="2_5t1b3"]
@@ -10,8 +10,6 @@
 [ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="8_e5bjw"]
 [ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://addons/virtual_joystick/textures/joystick_tip_arrows.png" id="9_di7ro"]
 [ext_resource type="Texture2D" uid="uid://dyb5duilp42dk" path="res://assets/Mobile-Controls/UI/UI_Circle_Bevel_Base.png" id="10_qolca"]
-[ext_resource type="Script" path="res://scripts/state_machine.gd" id="11_itlsv"]
-[ext_resource type="Script" path="res://scripts/Idle.gd" id="12_wyj2v"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wd7y8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -704,17 +702,6 @@ shape = SubResource("CircleShape2D_a2wg5")
 libraries = {
 "": SubResource("AnimationLibrary_wna7o")
 }
-
-[node name="StateMachine" type="Node" parent="CharacterBody3D"]
-script = ExtResource("11_itlsv")
-initial_state = NodePath("Idle")
-
-[node name="Idle" type="Node" parent="CharacterBody3D/StateMachine"]
-script = ExtResource("12_wyj2v")
-
-[node name="Standing" type="Node" parent="CharacterBody3D/StateMachine"]
-
-[node name="Proning" type="Node" parent="CharacterBody3D/StateMachine"]
 
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/jump" to="CharacterBody3D" method="_on_jump_pressed"]
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/run" to="CharacterBody3D" method="_on_run_pressed"]

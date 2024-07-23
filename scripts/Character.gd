@@ -4,6 +4,7 @@ class_name CharacterPlayer
 @export var animation_player: AnimationPlayer
 @export_range(5.0, 10.0) var animation_speed = 5.0
 
+
 var is_crouching : bool = false
 
 const proning_speed = 1.8
