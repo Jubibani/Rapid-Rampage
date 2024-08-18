@@ -1,13 +1,14 @@
-[gd_scene load_steps=18 format=3 uid="uid://d4fe48l2la7q4"]
+[gd_scene load_steps=19 format=3 uid="uid://d4fe48l2la7q4"]
 
-[ext_resource type="Script" path="res://scripts/Character.gd" id="1_apduv"]
-[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="2_l6x14"]
-[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="3_3vjfp"]
-[ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://addons/virtual_joystick/textures/joystick_tip_arrows.png" id="4_d2gj4"]
-[ext_resource type="Texture2D" uid="uid://dyb5duilp42dk" path="res://assets/Mobile-Controls/UI/UI_Circle_Bevel_Base.png" id="5_qb477"]
-[ext_resource type="Script" path="res://scripts/state_machine.gd" id="6_7sg1u"]
-[ext_resource type="Script" path="res://standing.gd" id="7_3ilkf"]
-[ext_resource type="Script" path="res://crouching.gd" id="8_3vxod"]
+[ext_resource type="Script" path="res://scripts/Character.gd" id="1_vvc6c"]
+[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="2_djxna"]
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="3_u7s0n"]
+[ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://addons/virtual_joystick/textures/joystick_tip_arrows.png" id="4_1fxik"]
+[ext_resource type="Texture2D" uid="uid://dyb5duilp42dk" path="res://assets/Mobile-Controls/UI/UI_Circle_Bevel_Base.png" id="5_gmt43"]
+[ext_resource type="Script" path="res://scripts/state_machine.gd" id="6_gco1r"]
+[ext_resource type="Script" path="res://states/standing.gd" id="7_551i0"]
+[ext_resource type="Script" path="res://states/crouching.gd" id="8_tykwr"]
+[ext_resource type="Script" path="res://states/proning.gd" id="9_4gs62"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nwh1x"]
 
@@ -232,9 +233,8 @@ _data = {
 "StandProne": SubResource("Animation_48ycb")
 }
 
-[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("state_machine", "animation_player")]
-script = ExtResource("1_apduv")
-state_machine = NodePath("StateMachine")
+[node name="CharacterBody3D" type="CharacterBody3D" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("1_vvc6c")
 animation_player = NodePath("AnimationPlayer")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
@@ -273,7 +273,7 @@ offset_top = -369.0
 offset_right = 378.0
 offset_bottom = -8.0
 grow_vertical = 0
-script = ExtResource("2_l6x14")
+script = ExtResource("2_djxna")
 
 [node name="Base" type="TextureRect" parent="Control/Test/UI/Virtual joystick left"]
 layout_mode = 1
@@ -290,7 +290,7 @@ grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(100, 100)
 mouse_force_pass_scroll_events = false
-texture = ExtResource("3_3vjfp")
+texture = ExtResource("3_u7s0n")
 stretch_mode = 5
 
 [node name="Tip" type="TextureRect" parent="Control/Test/UI/Virtual joystick left/Base"]
@@ -307,7 +307,7 @@ offset_bottom = 50.0
 grow_horizontal = 2
 grow_vertical = 2
 pivot_offset = Vector2(50, 50)
-texture = ExtResource("4_d2gj4")
+texture = ExtResource("4_1fxik")
 stretch_mode = 5
 
 [node name="buttons" type="Control" parent="Control"]
@@ -326,19 +326,19 @@ grow_vertical = 2
 [node name="jump" type="TouchScreenButton" parent="Control/buttons"]
 position = Vector2(172, 3)
 scale = Vector2(0.0859375, 0.0917969)
-texture_normal = ExtResource("5_qb477")
+texture_normal = ExtResource("5_gmt43")
 shape = SubResource("CircleShape2D_a2wg5")
 
 [node name="run" type="TouchScreenButton" parent="Control/buttons"]
 position = Vector2(58, 4)
 scale = Vector2(0.0859375, 0.0917969)
-texture_normal = ExtResource("5_qb477")
+texture_normal = ExtResource("5_gmt43")
 shape = SubResource("CircleShape2D_a2wg5")
 
 [node name="crouch" type="TouchScreenButton" parent="Control/buttons"]
 position = Vector2(119, 117)
 scale = Vector2(0.0859375, 0.0917969)
-texture_normal = ExtResource("5_qb477")
+texture_normal = ExtResource("5_gmt43")
 shape = SubResource("CircleShape2D_a2wg5")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -347,15 +347,16 @@ libraries = {
 }
 
 [node name="StateMachine" type="Node" parent="."]
-script = ExtResource("6_7sg1u")
+script = ExtResource("6_gco1r")
 
-[node name="standing" type="Node" parent="StateMachine"]
-script = ExtResource("7_3ilkf")
+[node name="Standing" type="Node" parent="StateMachine"]
+script = ExtResource("7_551i0")
 
-[node name="crouching" type="Node" parent="StateMachine"]
-script = ExtResource("8_3vxod")
+[node name="Crouching" type="Node" parent="StateMachine"]
+script = ExtResource("8_tykwr")
 
-[node name="proning" type="Node" parent="StateMachine"]
+[node name="Proning" type="Node" parent="StateMachine"]
+script = ExtResource("9_4gs62")
 
 [connection signal="pressed" from="Control/buttons/jump" to="." method="_on_jump_pressed"]
 [connection signal="pressed" from="Control/buttons/run" to="." method="_on_run_pressed"]

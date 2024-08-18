@@ -1,33 +1,41 @@
-extends Node
-class_name StateMachine
+class_name StateMachine extends Node
 
-#setting the states
-@export var initial_state : State
-@export var current_state : State
+## picking a starting state
 
-var states : Dictionary =  {}
+#Put it to inspector as a property
+@export var initial_state: State = null
+#getting the initial state with an iief
+@onready var state: State = (func get_initial_state() -> State:
+	return initial_state if initial_state != null else get_child(0)
+	).call()
 
-func _ready():
-	for child in get_children():
-		if child is State:
-			states[child.name.to_lower()] = child
-			child.state_machine = self
-			
-			print("child: ", child)
-	if initial_state:
-		transition_to(initial_state.name.to_lower())
+## referencing the state for transitioning 
+func _ready() -> void:
+	#reference the states to the State Machine
+	for state_node: State in find_children("*", "State"):
+		state_node.finished.connect(_transitioning_to_next_state)
+	# State machines usually access data from the root node of the scene they're part of: the owner.
+	# We wait for the owner to be ready to guarantee all the data and nodes the states may need are available.
+	await owner.ready
+	state.enter("")
 	
-func handle_input(event: InputEvent):
-	current_state.handle_input(event)
-
-func update(delta: float):
-	current_state.update(delta)
-
-func transition_to(new_state_name: String):
-	if current_state:
-		current_state.exit()
-	current_state = states[new_state_name]
-	current_state.enter()
-
-func get_player() -> CharacterBody3D:
-	return get_parent() as CharacterBody3D
+func _unhandled_input(event: InputEvent) -> void:
+	state.handle_input(event)
+	
+func _process(delta: float) -> void:
+	state.update(delta)
+	
+func _physics_process(delta: float) -> void:
+	state.physics_update(delta)
+		
+##transitioning to next state
+func _transitioning_to_next_state(target_state_path: String, data: Dictionary = {}) -> void:
+	if not has_node(target_state_path):
+		printerr(owner.name + ": Trying to transition to state " + target_state_path + " but it does not exist.")
+		return
+	
+	var previous_state_path := state.name	
+	state.exit()
+	state = get_node(target_state_path)
+	state.enter(previous_state_path, data)
+	
