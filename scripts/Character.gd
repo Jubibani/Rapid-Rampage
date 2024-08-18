@@ -1,7 +1,7 @@
 extends CharacterBody3D
 
 @export var animation_player : AnimationPlayer
-@export_range(5.0, 5.0, 10.0)var crouching_animation_speed = 5.0
+@export_range(5.0, 5.0, 10.0)var animation_speed = 5.0
 var SPEED = walking_speed
 
 var is_running : bool = false
@@ -22,12 +22,12 @@ func _input(event):
 			_run()
 		is_running = !is_running
 		
-	if Input.is_action_just_pressed("crouch") and is_on_floor():
-		if !is_crouching:
-			_crouch()
-		else:
-			_uncrouch()
-		is_crouching = !is_crouching
+	#if Input.is_action_just_pressed("crouch") and is_on_floor():
+		#if !is_crouching:
+			#_crouch()
+		#else:
+			#_uncrouch()
+		#is_crouching = !is_crouching
 		
 	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
@@ -65,13 +65,13 @@ func _physics_process(delta):
 #Handle Movements
 func _crouch():
 	if !is_crouching:
-		animation_player.play("CROUCHING", -1, crouching_animation_speed)
+		animation_player.play("CROUCHING", -1, animation_speed)
 		SPEED = crouching_speed
 		print("is crouching at the speed of: ", SPEED)
 	
 func _uncrouch():
 	if is_crouching:
-		animation_player.play("CROUCHING", -1, -crouching_animation_speed, true)
+		animation_player.play("CROUCHING", -1, -animation_speed, true)
 		SPEED = walking_speed 
 		print("is not crouching at the speed of: ", SPEED)
 
