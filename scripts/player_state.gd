@@ -1,16 +1,21 @@
 class_name PlayerState extends State
 
-
-#this will serve as a reference
 const Standing = "Standing"
 const Crouching = "Crouching"
 const Proning = "Proning"
 
-var is_crouching : bool = false
+var crouching : bool = true 
+var proning : bool = true 
 
-var player: CharacterBody3D
+@export var player: PlayerCharacter
 
 func _ready() -> void:
 	await owner.ready
-	player = owner as CharacterBody3D    
+	player = owner as PlayerCharacter    
+	print("owner: ", owner)
 	assert(player != null, "The PlayerState state type must be used only in the player scene. It needs the owner to be a Player node.")
+	
+	if player == null:
+		print("Player is null")
+	else:
+		print("Player is initialized")

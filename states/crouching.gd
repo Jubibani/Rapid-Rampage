@@ -1,10 +1,16 @@
 extends PlayerState
 
 func enter(previous_state_path: String, data := {}) -> void:
-	print("Entered Crouching state")
-
-
+	if Input.is_action_just_pressed("crouch_or_uncrouch"):
+		print("Entered Crouching state")
+		player.animation_player.play("CROUCHING", -1, player.animation_speed)
+		
+		crouching = true
+	if Input.is_action_just_pressed("prone_or_unprone"):
+		print("prone from crouch")
+		
 func physics_update(_delta: float) -> void:
-	if Input.is_action_pressed("crouch_or_uncrouch"):
-		finished.emit(Standing)
-		is_crouching = false
+	if Input.is_action_just_pressed("crouch_or_uncrouch") and crouching: 
+		crouching = false
+		finished.emit(Standing)  # Transition to Standing if the action is pressed
+	

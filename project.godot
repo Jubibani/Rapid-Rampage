@@ -10,9 +10,10 @@ config_version=5
 
 [application]
 
-config/name="ApexClone"
+config/name="gamedevelopment"
 run/main_scene="res://scenes/firing_range.tscn"
 config/features=PackedStringArray("4.3", "Mobile")
+config/icon="res://icon.svg"
 
 [display]
 
