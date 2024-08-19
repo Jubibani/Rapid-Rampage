@@ -1,10 +1,15 @@
+<<<<<<< HEAD
 [gd_scene load_steps=34 format=3 uid="uid://blu6csip2k6k"]
+=======
+[gd_scene load_steps=18 format=3 uid="uid://blu6csip2k6k"]
+>>>>>>> f19b1fbe91b7d47950f84f4253c45acf63007c07
 
 [ext_resource type="Texture2D" uid="uid://dy4ve5ftibvjk" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_09.png" id="1_k5xiq"]
 [ext_resource type="Texture2D" uid="uid://7hrukxyxqqsj" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_08.png" id="2_mk5ip"]
 [ext_resource type="Texture2D" uid="uid://cis3eqhlbsxxq" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="3_06iwi"]
 [ext_resource type="Texture2D" uid="uid://cpk3nohaqc761" path="res://assets/kenney_prototype-textures/PNG/Green/texture_09.png" id="4_8evxc"]
 [ext_resource type="Texture2D" uid="uid://bd6ok6c0nhvvm" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_01.png" id="5_niber"]
+<<<<<<< HEAD
 [ext_resource type="Script" path="res://scripts/Character.gd" id="6_wjet8"]
 [ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="7_o8015"]
 [ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="8_6a0d7"]
@@ -14,6 +19,9 @@
 [ext_resource type="Script" path="res://states/standing.gd" id="12_lae31"]
 [ext_resource type="Script" path="res://states/crouching.gd" id="13_ynow2"]
 [ext_resource type="Script" path="res://states/proning.gd" id="14_f0kaf"]
+=======
+[ext_resource type="PackedScene" uid="uid://d4fe48l2la7q4" path="res://scenes/Character.tscn" id="6_7qmgi"]
+>>>>>>> f19b1fbe91b7d47950f84f4253c45acf63007c07
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wd7y8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -51,6 +59,7 @@ albedo_texture = ExtResource("5_niber")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkhqy"]
 albedo_texture = ExtResource("1_k5xiq")
+<<<<<<< HEAD
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nwh1x"]
 
@@ -198,6 +207,8 @@ _data = {
 "RESET": SubResource("Animation_wypav"),
 "STANDPRONE": SubResource("Animation_dc8tj")
 }
+=======
+>>>>>>> f19b1fbe91b7d47950f84f4253c45acf63007c07
 
 [node name="world" type="Node3D"]
 
@@ -517,6 +528,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7171, 2.27417, -31.7095)
 size = Vector3(3.89551, 0.723801, 8.04843)
 material = SubResource("StandardMaterial3D_submt")
 
+<<<<<<< HEAD
 [node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("animation_player")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.86876, 0)
 script = ExtResource("6_wjet8")
@@ -646,3 +658,7 @@ script = ExtResource("14_f0kaf")
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/jump" to="CharacterBody3D" method="_on_jump_pressed"]
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/run" to="CharacterBody3D" method="_on_run_pressed"]
 [connection signal="pressed" from="CharacterBody3D/Control/buttons/crouch" to="CharacterBody3D" method="_on_crouch_pressed"]
+=======
+[node name="CharacterBody3D" parent="." instance=ExtResource("6_7qmgi")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.983776, 0)
+>>>>>>> f19b1fbe91b7d47950f84f4253c45acf63007c07
