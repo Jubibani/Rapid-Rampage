@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://d4fe48l2la7q4"]
+[gd_scene load_steps=20 format=3 uid="uid://d4fe48l2la7q4"]
 
 [ext_resource type="Script" path="res://scripts/Character.gd" id="1_vvc6c"]
 [ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="2_djxna"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://states/standing.gd" id="7_551i0"]
 [ext_resource type="Script" path="res://states/crouching.gd" id="8_tykwr"]
 [ext_resource type="Script" path="res://states/proning.gd" id="9_4gs62"]
+[ext_resource type="Script" path="res://states/prone_crouch.gd" id="10_t5tvw"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nwh1x"]
 
@@ -357,6 +358,9 @@ script = ExtResource("8_tykwr")
 
 [node name="Proning" type="Node" parent="StateMachine"]
 script = ExtResource("9_4gs62")
+
+[node name="ProneCrouch" type="Node" parent="StateMachine"]
+script = ExtResource("10_t5tvw")
 
 [connection signal="pressed" from="Control/buttons/jump" to="." method="_on_jump_pressed"]
 [connection signal="pressed" from="Control/buttons/run" to="." method="_on_run_pressed"]

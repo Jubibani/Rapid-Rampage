@@ -5,9 +5,17 @@ class_name PlayerState extends State
 const Standing = "Standing"
 const Crouching = "Crouching"
 const Proning = "Proning"
+const ProneCrouch = "ProneCrouch"
 
-var crouching : bool = false
-var proning : bool = false
+static var crouching : bool = false
+static var proning : bool = false
+
+
+
+#for debugging
+#var display_output = "crouching: %s, proning: %s" % [str(crouching), str(proning)]
+
+
 
 var CharacterPlayer : CharacterBody3D
 
