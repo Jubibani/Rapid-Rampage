@@ -7,8 +7,12 @@ const Crouching = "Crouching"
 const Proning = "Proning"
 const ProneCrouch = "ProneCrouch"
 
-static var crouching : bool = false
+#static var crouching : bool = false
+
+static var crouchingFromStand : bool = false
+static var crouchingFromProne : bool = false
 static var proning : bool = false
+
 
 
 
