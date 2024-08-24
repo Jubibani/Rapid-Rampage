@@ -1,0 +1,790 @@
+[gd_scene load_steps=34 format=3 uid="uid://blu6csip2k6k"]
+
+[ext_resource type="Texture2D" uid="uid://dy4ve5ftibvjk" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_09.png" id="1_o50ak"]
+[ext_resource type="Texture2D" uid="uid://7hrukxyxqqsj" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_08.png" id="2_mpe7w"]
+[ext_resource type="Texture2D" uid="uid://cis3eqhlbsxxq" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="3_ln4j3"]
+[ext_resource type="Texture2D" uid="uid://cpk3nohaqc761" path="res://assets/kenney_prototype-textures/PNG/Green/texture_09.png" id="4_8dox4"]
+[ext_resource type="Texture2D" uid="uid://bd6ok6c0nhvvm" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_01.png" id="5_2c60k"]
+[ext_resource type="Script" path="res://scripts/Character.gd" id="6_6au0i"]
+[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="7_vpdrx"]
+[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="8_shtn5"]
+[ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://addons/virtual_joystick/textures/joystick_tip_arrows.png" id="9_0252u"]
+[ext_resource type="Texture2D" uid="uid://dyb5duilp42dk" path="res://assets/Mobile-Controls/UI/UI_Circle_Bevel_Base.png" id="10_migb6"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wd7y8"]
+sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+ground_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
+
+[sub_resource type="Sky" id="Sky_8ea33"]
+sky_material = SubResource("ProceduralSkyMaterial_wd7y8")
+
+[sub_resource type="Environment" id="Environment_tnf8t"]
+background_mode = 2
+sky = SubResource("Sky_8ea33")
+tonemap_mode = 2
+glow_enabled = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xk4w3"]
+albedo_texture = ExtResource("1_o50ak")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n0t45"]
+albedo_texture = ExtResource("2_mpe7w")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yykup"]
+albedo_texture = ExtResource("3_ln4j3")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh6jp"]
+albedo_texture = ExtResource("4_8dox4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbipu"]
+albedo_texture = ExtResource("4_8dox4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mstm4"]
+albedo_texture = ExtResource("4_8dox4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_submt"]
+albedo_texture = ExtResource("5_2c60k")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkhqy"]
+albedo_texture = ExtResource("1_o50ak")
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nwh1x"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bqsdm"]
+albedo_color = Color(0.631428, 0.0978918, 0, 1)
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_stm7g"]
+material = SubResource("StandardMaterial3D_bqsdm")
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_a2wg5"]
+radius = 500.0
+
+[sub_resource type="Animation" id="Animation_n2m2p"]
+resource_name = "CROUCHING"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/Camera3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0), Vector3(0, 1, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.5]
+}
+
+[sub_resource type="Animation" id="Animation_f1usf"]
+resource_name = "CrouchProne"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 0.75, 0), Vector3(0, 0.25, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [1.5, 1.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("head/Camera3D:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, -0.22, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wypav"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1, 0)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("head/Camera3D:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [2.0]
+}
+
+[sub_resource type="Animation" id="Animation_48ycb"]
+resource_name = "StandProne"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape3D:shape:height")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("CollisionShape3D/MeshInstance3D:mesh:height")
+tracks/1/interp = 2
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [2.0, 1.0]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("CollisionShape3D:position")
+tracks/2/interp = 2
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1, 0), Vector3(0, 0.25, 0)]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("head/Camera3D:position")
+tracks/3/interp = 2
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0, 1.5, 0), Vector3(0, -0.22, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wna7o"]
+_data = {
+"CROUCHING": SubResource("Animation_n2m2p"),
+"CrouchProne": SubResource("Animation_f1usf"),
+"RESET": SubResource("Animation_wypav"),
+"StandProne": SubResource("Animation_48ycb")
+}
+
+[sub_resource type="GDScript" id="GDScript_2g5sw"]
+script/source = "extends Node
+class_name StateMachine
+
+
+
+var states : Dictionary =  {}
+
+func _ready():
+	for child in get_children():
+		if child is State:
+			states[child.name.to_lower()] = child
+			child.state_machine = self
+			
+			print(\"child: \", child)
+	if initial_state:
+		transition_to(initial_state.name.to_lower())
+	
+func handle_input(event: InputEvent):
+	current_state.handle_input(event)
+
+func update(delta: float):
+	current_state.update(delta)
+
+func transition_to(new_state_name: String):
+	if current_state:
+		current_state.exit()
+	current_state = states[new_state_name]
+	current_state.enter()
+
+func get_player() -> CharacterBody3D:
+	return get_parent() as CharacterBody3D
+"
+
+[sub_resource type="GDScript" id="GDScript_1j8rx"]
+script/source = "extends State
+
+func enter():
+	print(\"Entering Idle State\")
+
+func handle_input(event: InputEvent):
+	if event.is_action_pressed(\"crouch\"):
+		state_machine.transition_to(\"crouch\")
+	elif event.is_action_pressed(\"prone\"):
+		state_machine.transition_to(\"prone\")
+"
+
+[sub_resource type="GDScript" id="GDScript_441d7"]
+script/source = "extends State
+
+func enter():
+	print(\"Entering Crouch State\")
+	get_player().speed *= 0.5  # Slow down when crouching
+
+func exit():
+	get_player().speed *= 2  # Restore normal speed
+
+func handle_input(event: InputEvent):
+	if event.is_action_pressed(\"crouch\"):
+		print(\"crouched\")
+		state_machine.transition_to(\"idle\")
+		print(\"idle\")
+	elif event.is_action_pressed(\"prone\"):
+		state_machine.transition_to(\"prone\")
+
+func update(delta: float):
+	pass
+"
+
+[node name="world" type="Node3D"]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_tnf8t")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -0.500003, 0.749999, -0.43301, 0, 13.014, -8.67721)
+shadow_enabled = true
+
+[node name="combiner" type="CSGCombiner3D" parent="."]
+use_collision = true
+
+[node name="Ground" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.999214, 0.505684, -59.838)
+size = Vector3(129.404, 1, 136.005)
+material = SubResource("StandardMaterial3D_xk4w3")
+
+[node name="metalGround" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 9.82646, 1.37805, -10.3731)
+size = Vector3(12.6711, 1, 14.3103)
+material = SubResource("StandardMaterial3D_n0t45")
+
+[node name="pillar" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -2.94336)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar2" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -2.1611)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar3" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -1.32896)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar4" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, -0.333699)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar5" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 0.448568)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar6" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 1.2807)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="obstacle" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7477, 0.97475, 2.64387)
+size = Vector3(0.712372, 1, 2.59277)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle2" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, 4.35704, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle3" type="CSGBox3D" parent="combiner/metalGround"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -3.97655, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="metalGround2" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 25.643, 1.37805, -10.3731)
+size = Vector3(12.6711, 1, 14.3103)
+material = SubResource("StandardMaterial3D_n0t45")
+
+[node name="pillar" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -3.15302)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar2" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -2.37075)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar3" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -1.53862)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar4" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, -0.333699)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar5" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 0.448568)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar6" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 1.2807)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="obstacle" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.7477, 0.97475, 2.64387)
+size = Vector3(0.712372, 1, 2.59277)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle2" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, 4.35704, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle3" type="CSGBox3D" parent="combiner/metalGround2"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -3.97655, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="metalGround3" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.39345, 1.37805, -10.3731)
+size = Vector3(12.6711, 1, 14.3103)
+material = SubResource("StandardMaterial3D_n0t45")
+
+[node name="pillar" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -3.08023)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar2" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -2.29797)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar3" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -1.46583)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar4" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, -0.333699)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar5" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 0.448568)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar6" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 1.2807)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="obstacle" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.89293, 0.686869, 2.45006)
+size = Vector3(0.712372, 1, 2.59277)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle2" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, 4.35704, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle3" type="CSGBox3D" parent="combiner/metalGround3"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -3.97655, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="metalGround4" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -23.5084, 1.37805, -10.3731)
+size = Vector3(12.6711, 1, 14.3103)
+material = SubResource("StandardMaterial3D_n0t45")
+
+[node name="pillar" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -2.94336)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar2" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -2.1611)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar3" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.0075, 1.49081, -1.32896)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar4" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, -0.333699)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar5" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 0.448568)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="pillar6" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.98558, 1.49081, 1.2807)
+size = Vector3(0.56842, 2.40088, 0.518555)
+
+[node name="obstacle2" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.85367, 0.686869, 2.45006)
+size = Vector3(0.712372, 1, 2.59277)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle3" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, 4.35704, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle4" type="CSGBox3D" parent="combiner/metalGround4"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -3.97655, 0.825397, -6.50769)
+size = Vector3(0.802597, 0.701294, 3.8949)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="wall" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2.00295, 2.67814, -31.7101)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_mh6jp")
+
+[node name="wall2" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.1292, 2.67814, -31.7101)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_mh6jp")
+
+[node name="wall3" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6669, 2.67814, -31.7101)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_mh6jp")
+
+[node name="wall4" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.43, 2.67814, -31.7101)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="Big Ground" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -6.83466, 5.14259, -61.2181)
+size = Vector3(54.8888, 10.0571, 37.3892)
+material = SubResource("StandardMaterial3D_mstm4")
+
+[node name="wall4" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -16.2824, 6.15059, -0.405609)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="wall5" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(-0.00214676, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00214676, -0.829631, 6.14643, 9.44186)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="wall6" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(-0.00214676, 0, -0.999998, 0, 1, 0, 0.999998, 0, -0.00214676, -0.829631, 6.14643, -8.21081)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="wall7" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 18.7604, 6.15059, -0.405609)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="obstacle4" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -0.923308, 5.71008, 0.677208)
+size = Vector3(5.19517, 1.46881, 10.0145)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle5" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -3.31357, 5.64725, 18.5088)
+size = Vector3(0.802597, 1.17438, 6.59149)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle6" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, 12.2486, 5.64725, 18.5088)
+size = Vector3(0.802597, 1.17438, 6.59149)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="obstacle7" type="CSGBox3D" parent="combiner/Big Ground"]
+transform = Transform3D(-0.0054279, 0, -0.999985, 0, 1, 0, 0.999985, 0, -0.0054279, -20.4675, 5.64725, 18.5088)
+size = Vector3(0.802597, 1.17438, 6.59149)
+material = SubResource("StandardMaterial3D_yykup")
+
+[node name="metal wall" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 37.644, 2.96222, -57.6069)
+size = Vector3(1, 4.94629, 31.7192)
+material = SubResource("StandardMaterial3D_submt")
+
+[node name="metal wall2" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 21.0291, 2.96222, -54.7109)
+size = Vector3(1, 4.94629, 50.2795)
+material = SubResource("StandardMaterial3D_submt")
+
+[node name="wall5" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -30.43, 2.67814, -42.3823)
+size = Vector3(4.05353, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="wall6" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -13.9491, 2.67814, -42.2777)
+size = Vector3(23.2762, 3.47371, 8.05859)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="wall7" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 10.7272, 2.67814, -43.099)
+size = Vector3(11.0678, 3.47371, 10.0614)
+material = SubResource("StandardMaterial3D_cbipu")
+
+[node name="stairs" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(0.766011, -0.642828, 0, 0.642828, 0.766011, 0, 0, 0, 1, -2.27143, 1.87416, -34.1287)
+size = Vector3(6.70557, 1, 3.20404)
+material = SubResource("StandardMaterial3D_pkhqy")
+
+[node name="stairs2" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(-0.00141714, 0.00118923, 0.999998, 0.642828, 0.766011, -2.404e-09, -0.76601, 0.642827, -0.00185002, -15.5211, 6.36551, -38.7918)
+size = Vector3(10.5973, 1, 3.20404)
+material = SubResource("StandardMaterial3D_pkhqy")
+
+[node name="stairs3" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(-0.765986, 0.642807, -0.00811561, 0.642828, 0.766011, -2.4215e-09, 0.00621663, -0.00521695, -0.999967, 26.6887, 4.40606, -54.127)
+size = Vector3(16.7488, 1, 3.20404)
+material = SubResource("StandardMaterial3D_pkhqy")
+
+[node name="metal wall3" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6751, 3.52502, -26.5583)
+size = Vector3(1, 1.77165, 2.59038)
+material = SubResource("StandardMaterial3D_submt")
+
+[node name="metal wall4" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -15.6751, 2.49627, -23.9435)
+size = Vector3(1, 3.82143, 2.59038)
+material = SubResource("StandardMaterial3D_submt")
+
+[node name="metal wall5" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -14.2082, 2.63562, -23.9486)
+size = Vector3(3.89551, 0.723801, 2.59711)
+material = SubResource("StandardMaterial3D_submt")
+
+[node name="metal wall6" type="CSGBox3D" parent="combiner"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7171, 2.27417, -31.7095)
+size = Vector3(3.89551, 0.723801, 8.04843)
+material = SubResource("StandardMaterial3D_submt")
+
+[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("animation_player")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.24092, 0)
+script = ExtResource("6_6au0i")
+animation_player = NodePath("AnimationPlayer")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_nwh1x")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
+mesh = SubResource("CapsuleMesh_stm7g")
+skeleton = NodePath("../..")
+
+[node name="head" type="Node3D" parent="CharacterBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51472, -0.0438347)
+
+[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Control" type="Control" parent="CharacterBody3D"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Test" type="Node2D" parent="CharacterBody3D/Control"]
+
+[node name="UI" type="CanvasLayer" parent="CharacterBody3D/Control/Test"]
+
+[node name="Virtual joystick left" type="Control" parent="CharacterBody3D/Control/Test/UI"]
+layout_mode = 3
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = -369.0
+offset_right = 378.0
+offset_bottom = -8.0
+grow_vertical = 0
+script = ExtResource("7_vpdrx")
+
+[node name="Base" type="TextureRect" parent="CharacterBody3D/Control/Test/UI/Virtual joystick left"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -100.0
+offset_top = -100.0
+offset_right = 100.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(100, 100)
+mouse_force_pass_scroll_events = false
+texture = ExtResource("8_shtn5")
+stretch_mode = 5
+
+[node name="Tip" type="TextureRect" parent="CharacterBody3D/Control/Test/UI/Virtual joystick left/Base"]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -50.0
+offset_top = -50.0
+offset_right = 50.0
+offset_bottom = 50.0
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(50, 50)
+texture = ExtResource("9_0252u")
+stretch_mode = 5
+
+[node name="buttons" type="Control" parent="CharacterBody3D/Control"]
+layout_mode = 1
+anchors_preset = 6
+anchor_left = 1.0
+anchor_top = 0.5
+anchor_right = 1.0
+anchor_bottom = 0.5
+offset_left = -298.0
+offset_top = -155.0
+offset_bottom = 191.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="jump" type="TouchScreenButton" parent="CharacterBody3D/Control/buttons"]
+position = Vector2(172, 3)
+scale = Vector2(0.0859375, 0.0917969)
+texture_normal = ExtResource("10_migb6")
+shape = SubResource("CircleShape2D_a2wg5")
+
+[node name="run" type="TouchScreenButton" parent="CharacterBody3D/Control/buttons"]
+position = Vector2(58, 4)
+scale = Vector2(0.0859375, 0.0917969)
+texture_normal = ExtResource("10_migb6")
+shape = SubResource("CircleShape2D_a2wg5")
+
+[node name="crouch" type="TouchScreenButton" parent="CharacterBody3D/Control/buttons"]
+position = Vector2(119, 117)
+scale = Vector2(0.0859375, 0.0917969)
+texture_normal = ExtResource("10_migb6")
+shape = SubResource("CircleShape2D_a2wg5")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D"]
+libraries = {
+"": SubResource("AnimationLibrary_wna7o")
+}
+
+[node name="StateMachine" type="Node" parent="CharacterBody3D" node_paths=PackedStringArray("initial_state", "current_state")]
+script = SubResource("GDScript_2g5sw")
+initial_state = NodePath("standing")
+current_state = NodePath("crouching")
+
+[node name="standing" type="Node" parent="CharacterBody3D/StateMachine"]
+script = SubResource("GDScript_1j8rx")
+
+[node name="crouching" type="Node" parent="CharacterBody3D/StateMachine"]
+script = SubResource("GDScript_441d7")
+
+[node name="proning" type="Node" parent="CharacterBody3D/StateMachine"]
+
+[connection signal="pressed" from="CharacterBody3D/Control/buttons/jump" to="CharacterBody3D" method="_on_jump_pressed"]
+[connection signal="pressed" from="CharacterBody3D/Control/buttons/run" to="CharacterBody3D" method="_on_run_pressed"]
+[connection signal="pressed" from="CharacterBody3D/Control/buttons/crouch" to="CharacterBody3D" method="_on_crouch_pressed"]
