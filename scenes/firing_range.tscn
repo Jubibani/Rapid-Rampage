@@ -1,15 +1,11 @@
-[gd_scene load_steps=29 format=3 uid="uid://blu6csip2k6k"]
+[gd_scene load_steps=18 format=3 uid="uid://blu6csip2k6k"]
 
-[ext_resource type="Texture2D" uid="uid://dy4ve5ftibvjk" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_09.png" id="1_r2cog"]
-[ext_resource type="Texture2D" uid="uid://7hrukxyxqqsj" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_08.png" id="2_tgxiy"]
-[ext_resource type="Texture2D" uid="uid://cis3eqhlbsxxq" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="3_xe27y"]
-[ext_resource type="Texture2D" uid="uid://cpk3nohaqc761" path="res://assets/kenney_prototype-textures/PNG/Green/texture_09.png" id="4_iory1"]
-[ext_resource type="Texture2D" uid="uid://bd6ok6c0nhvvm" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_01.png" id="5_lqjuf"]
-[ext_resource type="Script" path="res://scripts/Character.gd" id="6_l5uo7"]
-[ext_resource type="Script" path="res://addons/virtual_joystick/virtual_joystick.gd" id="7_nym07"]
-[ext_resource type="Texture2D" uid="uid://bm30au8mjfc2f" path="res://addons/virtual_joystick/textures/joystick_base_outline.png" id="8_hwo63"]
-[ext_resource type="Texture2D" uid="uid://dt13r06u87fib" path="res://addons/virtual_joystick/textures/joystick_tip_arrows.png" id="9_nwrk5"]
-[ext_resource type="Texture2D" uid="uid://dyb5duilp42dk" path="res://assets/Mobile-Controls/UI/UI_Circle_Bevel_Base.png" id="10_20p6f"]
+[ext_resource type="Texture2D" uid="uid://dy4ve5ftibvjk" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_09.png" id="1_mmg4v"]
+[ext_resource type="Texture2D" uid="uid://7hrukxyxqqsj" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_08.png" id="2_f1e8f"]
+[ext_resource type="Texture2D" uid="uid://cis3eqhlbsxxq" path="res://assets/kenney_prototype-textures/PNG/Orange/texture_01.png" id="3_61hmu"]
+[ext_resource type="Texture2D" uid="uid://cpk3nohaqc761" path="res://assets/kenney_prototype-textures/PNG/Green/texture_09.png" id="4_cmjm4"]
+[ext_resource type="Texture2D" uid="uid://bd6ok6c0nhvvm" path="res://assets/kenney_prototype-textures/PNG/Dark/texture_01.png" id="5_pqren"]
+[ext_resource type="PackedScene" uid="uid://d4fe48l2la7q4" path="res://scenes/Character.tscn" id="6_qdyrg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wd7y8"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -25,123 +21,28 @@ tonemap_mode = 2
 glow_enabled = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_xk4w3"]
-albedo_texture = ExtResource("1_r2cog")
+albedo_texture = ExtResource("1_mmg4v")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_n0t45"]
-albedo_texture = ExtResource("2_tgxiy")
+albedo_texture = ExtResource("2_f1e8f")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_yykup"]
-albedo_texture = ExtResource("3_xe27y")
+albedo_texture = ExtResource("3_61hmu")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mh6jp"]
-albedo_texture = ExtResource("4_iory1")
+albedo_texture = ExtResource("4_cmjm4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_cbipu"]
-albedo_texture = ExtResource("4_iory1")
+albedo_texture = ExtResource("4_cmjm4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mstm4"]
-albedo_texture = ExtResource("4_iory1")
+albedo_texture = ExtResource("4_cmjm4")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_submt"]
-albedo_texture = ExtResource("5_lqjuf")
+albedo_texture = ExtResource("5_pqren")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_pkhqy"]
-albedo_texture = ExtResource("1_r2cog")
-
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_nwh1x"]
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_bqsdm"]
-albedo_color = Color(0.631428, 0.0978918, 0, 1)
-
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_stm7g"]
-material = SubResource("StandardMaterial3D_bqsdm")
-
-[sub_resource type="CircleShape2D" id="CircleShape2D_a2wg5"]
-radius = 500.0
-
-[sub_resource type="Animation" id="Animation_n2m2p"]
-resource_name = "CROUCHING"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape3D:shape:height")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [2.0, 1.5]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape3D:position")
-tracks/1/interp = 2
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 1, 0), Vector3(0, 0.75, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("head/Camera3D:position")
-tracks/2/interp = 2
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0, 1),
-"transitions": PackedFloat32Array(1, 1),
-"update": 0,
-"values": [Vector3(0, 1.5, 0), Vector3(0, 1, 0)]
-}
-
-[sub_resource type="Animation" id="Animation_wypav"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("CollisionShape3D:shape:height")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [2.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollisionShape3D:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 1, 0)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("head/Camera3D:position")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 1.5, 0)]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wna7o"]
-_data = {
-"CROUCHING": SubResource("Animation_n2m2p"),
-"RESET": SubResource("Animation_wypav")
-}
+albedo_texture = ExtResource("1_mmg4v")
 
 [node name="world" type="Node3D"]
 
@@ -461,120 +362,5 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -11.7171, 2.27417, -31.7095)
 size = Vector3(3.89551, 0.723801, 8.04843)
 material = SubResource("StandardMaterial3D_submt")
 
-[node name="CharacterBody3D" type="CharacterBody3D" parent="." node_paths=PackedStringArray("animation_player")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 2, 0)
-script = ExtResource("6_l5uo7")
-animation_player = NodePath("AnimationPlayer")
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_nwh1x")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="CharacterBody3D/CollisionShape3D"]
-mesh = SubResource("CapsuleMesh_stm7g")
-skeleton = NodePath("../..")
-
-[node name="head" type="Node3D" parent="CharacterBody3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.51472, -0.0438347)
-
-[node name="Camera3D" type="Camera3D" parent="CharacterBody3D/head"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-
-[node name="Control" type="Control" parent="CharacterBody3D"]
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Test" type="Node2D" parent="CharacterBody3D/Control"]
-
-[node name="UI" type="CanvasLayer" parent="CharacterBody3D/Control/Test"]
-
-[node name="Virtual joystick left" type="Control" parent="CharacterBody3D/Control/Test/UI"]
-layout_mode = 3
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
-offset_left = 30.0
-offset_top = -369.0
-offset_right = 378.0
-offset_bottom = -8.0
-grow_vertical = 0
-script = ExtResource("7_nym07")
-
-[node name="Base" type="TextureRect" parent="CharacterBody3D/Control/Test/UI/Virtual joystick left"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -100.0
-offset_top = -100.0
-offset_right = 100.0
-offset_bottom = 100.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(100, 100)
-mouse_force_pass_scroll_events = false
-texture = ExtResource("8_hwo63")
-stretch_mode = 5
-
-[node name="Tip" type="TextureRect" parent="CharacterBody3D/Control/Test/UI/Virtual joystick left/Base"]
-layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -50.0
-offset_top = -50.0
-offset_right = 50.0
-offset_bottom = 50.0
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(50, 50)
-texture = ExtResource("9_nwrk5")
-stretch_mode = 5
-
-[node name="buttons" type="Control" parent="CharacterBody3D/Control"]
-layout_mode = 1
-anchors_preset = 6
-anchor_left = 1.0
-anchor_top = 0.5
-anchor_right = 1.0
-anchor_bottom = 0.5
-offset_left = -298.0
-offset_top = -155.0
-offset_bottom = 191.0
-grow_horizontal = 0
-grow_vertical = 2
-
-[node name="jump" type="TouchScreenButton" parent="CharacterBody3D/Control/buttons"]
-position = Vector2(172, 3)
-scale = Vector2(0.0859375, 0.0917969)
-texture_normal = ExtResource("10_20p6f")
-shape = SubResource("CircleShape2D_a2wg5")
-
-[node name="run" type="TouchScreenButton" parent="CharacterBody3D/Control/buttons"]
-position = Vector2(58, 4)
-scale = Vector2(0.0859375, 0.0917969)
-texture_normal = ExtResource("10_20p6f")
-shape = SubResource("CircleShape2D_a2wg5")
-
-[node name="crouch" type="TouchScreenButton" parent="CharacterBody3D/Control/buttons"]
-position = Vector2(119, 117)
-scale = Vector2(0.0859375, 0.0917969)
-texture_normal = ExtResource("10_20p6f")
-shape = SubResource("CircleShape2D_a2wg5")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="CharacterBody3D"]
-libraries = {
-"": SubResource("AnimationLibrary_wna7o")
-}
-
-[connection signal="pressed" from="CharacterBody3D/Control/buttons/jump" to="CharacterBody3D" method="_on_jump_pressed"]
-[connection signal="pressed" from="CharacterBody3D/Control/buttons/run" to="CharacterBody3D" method="_on_run_pressed"]
-[connection signal="pressed" from="CharacterBody3D/Control/buttons/crouch" to="CharacterBody3D" method="_on_crouch_pressed"]
+[node name="CharacterBody3D" parent="." instance=ExtResource("6_qdyrg")]
+transform = Transform3D(0.783715, 0, 0.62112, 0, 1, 0, -0.62112, 0, 0.783715, -9.11075, 1.5467, -23.8142)

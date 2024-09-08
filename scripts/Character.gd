@@ -1,15 +1,16 @@
-extends CharacterBody3D
+class_name CharacterPlayer extends CharacterBody3D
 
 @export var animation_player : AnimationPlayer
-@export_range(5.0, 5.0, 10.0)var crouching_animation_speed = 5.0
+@export_range(5.0, 5.0, 10.0)var animation_speed = 5.0
 var SPEED = walking_speed
 
 var is_running : bool = false
 var is_crouching : bool = false
 
-const crouching_speed = 2.3
+const running_speed = 10.0
 const walking_speed = 5.5
-const running_speed = 12.5
+const crouching_speed = 2.5
+const proning_speed = 2.0
 const JUMP_VELOCITY = 4.5
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
@@ -17,17 +18,6 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
  
 func _input(event):
 	
-	if Input.is_action_just_pressed("run") and is_on_floor():
-		if !is_crouching:
-			_run()
-		is_running = !is_running
-		
-	if Input.is_action_just_pressed("crouch") and is_on_floor():
-		if !is_crouching:
-			_crouch()
-		else:
-			_uncrouch()
-		is_crouching = !is_crouching
 		
 	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
@@ -44,10 +34,6 @@ func _physics_process(delta):
 	if not is_on_floor():
 		velocity.y -= gravity * delta
 
-	# Handle jump.
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
-		velocity.y = JUMP_VELOCITY
-
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
@@ -62,32 +48,6 @@ func _physics_process(delta):
 	move_and_slide()
 
 
-#Handle Movements
-func _crouch():
-	if !is_crouching:
-		animation_player.play("CROUCHING", -1, crouching_animation_speed)
-		SPEED = crouching_speed
-		print("is crouching at the speed of: ", SPEED)
-	
-func _uncrouch():
-	if is_crouching:
-		animation_player.play("CROUCHING", -1, -crouching_animation_speed, true)
-		SPEED = walking_speed 
-		print("is not crouching at the speed of: ", SPEED)
-
-func _run():
-	if !is_crouching:
-		if !is_running:
-			SPEED = running_speed
-			print("running at the speed of: ", SPEED)					
-		elif is_crouching:
-			SPEED = crouching_speed
-		elif is_running:
-			SPEED = walking_speed
-			print("walking at the speed of: ", SPEED)
-	else:
-		SPEED = walking_speed
-		print("from run(), and walking at the speed of: ", SPEED)	
 
 
 func _on_jump_pressed():
@@ -95,16 +55,3 @@ func _on_jump_pressed():
 	if is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		print("jumped")
-
-
-func _on_run_pressed():
-	if !is_crouching and is_on_floor():
-		_run()
-	is_running = !is_running
-
-func _on_crouch_pressed():
-	if !is_crouching:
-		_crouch()
-	else:
-		_uncrouch()
-	is_crouching = !is_crouching
