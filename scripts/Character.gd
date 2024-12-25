@@ -151,9 +151,6 @@ func _on_run_pressed():
 		_run()
 	is_running = !is_running
 
-func _on_crouch_pressed():
-	if !is_crouching:
-		_crouch()
-	else:
-		_uncrouch()
-	is_crouching = !is_crouching
+
+func _on_crouch_pressed() -> void:
+	pass # Replace with function body.

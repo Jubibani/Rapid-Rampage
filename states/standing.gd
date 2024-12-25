@@ -21,10 +21,21 @@ func enter(previous_state_path: String, data := {}) -> void:
 	proning = false
 
 func physics_update(_delta: float) -> void:
-	if Input.is_action_just_pressed("crouch_or_uncrouch"):
+	if Input.is_action_just_pressed("crouch_or_uncrouch") or Input.is_action_just_pressed("crouch_mobile_button"):
+		print("Mobile button or key press detected [from stand]")
 		crouchingFromStand = true
 		finished.emit(Crouching)
+		Input.action_release("crouch_mobile_button")
 	
-	if Input.is_action_just_pressed("prone_or_unprone"):
+	if Input.is_action_just_pressed("prone_or_unprone") or Input.is_action_just_pressed("prone_mobile_button"):
 		proning = true
 		finished.emit(Proning)
+		Input.action_release("prone_mobile_button")
+
+
+func _on_crouch_pressed() -> void:
+	Input.action_press("crouch_mobile_button")
+
+
+func _on_prone_pressed() -> void:
+	Input.action_press("prone_mobile_button")
