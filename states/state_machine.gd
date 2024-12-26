@@ -37,6 +37,4 @@ func _transitioning_to_next_state(target_state_path: String, data: Dictionary = 
 	var previous_state_path := state.name	
 	state.exit()
 	state = get_node(target_state_path)
-	state.enter(previous_state_path, data)
-	
-	
+	state.enter(previous_state_path, data) 
