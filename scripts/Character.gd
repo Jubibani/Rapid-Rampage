@@ -13,6 +13,16 @@ const crouching_speed = 2.5
 const proning_speed = 2.0
 const JUMP_VELOCITY = 4.5
 
+#head bobbing
+const bob_frequency = 2.0
+const bob_amplitude = 0.08
+var t_bob = 0.0
+
+#FOV
+const base_fov = 75.0
+const fov_change = 1.5
+
+@onready var camera = $head/Camera3D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
  
@@ -33,16 +43,40 @@ func _physics_process(delta):
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta
+		
 
 	# Get the input direction and handle the movement/deceleration.
 	# As good practice, you should replace UI actions with custom gameplay actions.
 	var input_dir = Input.get_vector("left", "right", "forward", "backward")
 	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	if direction:
-		velocity.x = direction.x * SPEED
-		velocity.z = direction.z * SPEED
+	
+	#adding inertia to gravity
+	if is_on_floor():
+		if direction:
+			velocity.x = direction.x * SPEED
+			velocity.z = direction.z * SPEED
+		else:
+			#fix the movement momentum when we stop moving, the character stops in a weird manner with no momentum
+			velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 7.0)
 	else:
-		velocity.x = move_toward(velocity.x, 0, SPEED)
-		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+		#inertia
+		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
+		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
+		
+	#head bobbing
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	$head.transform.origin = _headbob(t_bob)
+	
+	#fov
+	var velocity_clamped = clamp(velocity.length(), 0.5, running_speed * 2)
+	var target_fov = base_fov + fov_change * velocity_clamped
+	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
+	
 	move_and_slide()
+
+func _headbob(time) -> Vector3:
+	var pos = Vector3.ZERO
+	pos.y = sin(time * bob_frequency) * bob_amplitude
+	pos.x = sin(time * bob_frequency / 2) * bob_amplitude
+	return pos
