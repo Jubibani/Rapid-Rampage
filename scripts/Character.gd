@@ -13,6 +13,11 @@ const crouching_speed = 2.5
 const proning_speed = 2.0
 const JUMP_VELOCITY = 4.5
 
+#head bobbing
+const bob_frequency = 2.0
+const bob_amplitude = 0.08
+const t_bob = 0.0
+
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
  
