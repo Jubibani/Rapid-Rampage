@@ -16,7 +16,7 @@ const JUMP_VELOCITY = 4.5
 #head bobbing
 const bob_frequency = 2.0
 const bob_amplitude = 0.08
-const t_bob = 0.0
+var t_bob = 0.0
 
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
@@ -49,5 +49,15 @@ func _physics_process(delta):
 	else:
 		velocity.x = move_toward(velocity.x, 0, SPEED)
 		velocity.z = move_toward(velocity.z, 0, SPEED)
-
+		
+		
+	#head bobbing
+	t_bob += delta * velocity.length() * float(is_on_floor())
+	$head.transform.origin = _headbob(t_bob)
+	
 	move_and_slide()
+
+func _headbob(time) -> Vector3:
+	var pos = Vector3.ZERO
+	pos.y = sin(time * bob_frequency) * bob_amplitude
+	return pos
