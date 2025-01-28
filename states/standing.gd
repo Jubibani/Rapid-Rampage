@@ -18,6 +18,10 @@ func enter(previous_state_path: String, data := {}) -> void:
 	else:
 		print("Already standing - ",  "crouching: %-8s proning: %s" % [str(crouchingFromStand), str(proning)])
 	
+	#add footstep
+	CharacterPlayer.step_interval = 0.6
+	CharacterPlayer.footstep_sound.volume_db = -45
+	
 	# Reset state flags
 	crouchingFromStand = false
 	crouchingFromProne = false

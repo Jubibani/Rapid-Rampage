@@ -11,7 +11,10 @@ func enter(previous_state_path: String, data = {}) -> void:
 		
 	crouchingFromProne = false
 	proning = true
-
+	
+	#mute footstep
+	CharacterPlayer.footstep_sound.volume_db = -100
+	
 	CharacterPlayer.SPEED = CharacterPlayer.proning_speed
 	print("proning speed at: ", CharacterPlayer.SPEED)
 	

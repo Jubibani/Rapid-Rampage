@@ -12,6 +12,9 @@ func enter(previous_state_path: String, data = {}) -> void:
 	elif crouchingFromProne and not proning:
 		CharacterPlayer.animation_player.play("ProneCrouching", -1, -CharacterPlayer.animation_speed, true)
 		print("Transitioning from Prone to Crouch - ",  "crouching: %s, proning: %s" % [str(crouchingFromProne), str(proning)])
+	
+	#mute footstep
+	CharacterPlayer.footstep_sound.volume_db = -100
 		
 	crouchingFromProne = true
 	crouchingFromStand = true

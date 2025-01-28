@@ -6,6 +6,7 @@ var SPEED = walking_speed
 
 var is_running : bool = false
 var is_crouching : bool = false
+var player_jumped: bool = false
 
 const running_speed = 10.0
 const walking_speed = 5.5
@@ -29,13 +30,18 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 
 #sounds
 @onready var footstep_sound = $FootStepSound
+@onready var jumplanding_sound = $JumpLandSound
+
 # Walking sound timer
 var time_since_step = 0.0
-const step_interval = 0.6 # Adjust this for step frequency
+var step_interval = 0.6 
+
+var delta_time : float = 0.0 # make delta global
+
+
  
 func _input(event):
 	
-		
 	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
 		rotate_y(deg_to_rad(-event.relative.x * look_sensitivity))
@@ -46,10 +52,10 @@ func _input(event):
 		head_rotation.x = clamp(head_rotation.x, -90, 90)
 		$head.rotation_degrees = head_rotation
 		
-func _physics_process(delta):
+func _physics_process(delta_time ):
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y -= gravity * delta
+		velocity.y -= gravity * delta_time 
 		
 
 	# Get the input direction and handle the movement/deceleration.
@@ -64,29 +70,25 @@ func _physics_process(delta):
 			velocity.z = direction.z * SPEED
 			
 			# Play footstep sound
-			time_since_step += delta
-			if time_since_step >= step_interval:
-				footstep_sound.pitch_scale = randf() * 0.2 + 0.9
-				footstep_sound.play()
-				time_since_step = 0.0
+			footstep(delta_time )
 
 		else:
 			#fix the movement momentum when we stop moving, the character stops in a weird manner with no momentum
-			velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 7.0)
-			velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 7.0)
+			velocity.x = lerp(velocity.x, direction.x * SPEED, delta_time  * 7.0)
+			velocity.z = lerp(velocity.z, direction.z * SPEED, delta_time  * 7.0)
 	else:
 		#inertia
-		velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 3.0)
-		velocity.z = lerp(velocity.z, direction.z * SPEED, delta * 3.0)
+		velocity.x = lerp(velocity.x, direction.x * SPEED, delta_time  * 3.0)
+		velocity.z = lerp(velocity.z, direction.z * SPEED, delta_time  * 3.0)
 		
 	#head bobbing
-	t_bob += delta * velocity.length() * float(is_on_floor())
+	t_bob += delta_time  * velocity.length() * float(is_on_floor())
 	$head.transform.origin = _headbob(t_bob)
 	
 	#fov
 	var velocity_clamped = clamp(velocity.length(), 0.5, running_speed * 2)
 	var target_fov = base_fov + fov_change * velocity_clamped
-	camera.fov = lerp(camera.fov, target_fov, delta * 8.0)
+	camera.fov = lerp(camera.fov, target_fov, delta_time  * 8.0)
 	
 	move_and_slide()
 
@@ -96,6 +98,11 @@ func _headbob(time) -> Vector3:
 	pos.x = sin(time * bob_frequency / 2) * bob_amplitude
 	return pos
 		
-#func _footstep():
-	#footstep_sound.play()
-	#await get_tree().create_timer(1).timeout
+func footstep(delta_time ):
+
+	
+	time_since_step += delta_time 
+	if time_since_step >= step_interval:
+		footstep_sound.pitch_scale = randf() * 0.2 + 0.9
+		footstep_sound.play()
+		time_since_step = 0.0
