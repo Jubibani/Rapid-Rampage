@@ -22,9 +22,16 @@ var t_bob = 0.0
 const base_fov = 75.0
 const fov_change = 1.5
 
+
 @onready var camera = $head/Camera3D
 # Get the gravity from the project settings to be synced with RigidBody nodes.
 var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
+
+#sounds
+@onready var footstep_sound = $FootStepSound
+# Walking sound timer
+var time_since_step = 0.0
+const step_interval = 0.6 # Adjust this for step frequency
  
 func _input(event):
 	
@@ -55,6 +62,14 @@ func _physics_process(delta):
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
+			
+			# Play footstep sound
+			time_since_step += delta
+			if time_since_step >= step_interval:
+				footstep_sound.pitch_scale = randf() * 0.2 + 0.9
+				footstep_sound.play()
+				time_since_step = 0.0
+
 		else:
 			#fix the movement momentum when we stop moving, the character stops in a weird manner with no momentum
 			velocity.x = lerp(velocity.x, direction.x * SPEED, delta * 7.0)
@@ -80,3 +95,7 @@ func _headbob(time) -> Vector3:
 	pos.y = sin(time * bob_frequency) * bob_amplitude
 	pos.x = sin(time * bob_frequency / 2) * bob_amplitude
 	return pos
+		
+#func _footstep():
+	#footstep_sound.play()
+	#await get_tree().create_timer(1).timeout
