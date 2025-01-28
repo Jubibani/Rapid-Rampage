@@ -15,6 +15,10 @@ func enter(previous_state_path: String, data = {}) -> void:
 	#mute footstep
 	CharacterPlayer.footstep_sound.volume_db = -100
 	
+	#add sound
+	CharacterPlayer.proning_sound.play()
+	CharacterPlayer.proning_sound.volume_db = -50
+	
 	CharacterPlayer.SPEED = CharacterPlayer.proning_speed
 	print("proning speed at: ", CharacterPlayer.SPEED)
 	

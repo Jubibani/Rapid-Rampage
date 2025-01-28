@@ -10,6 +10,10 @@ func enter(previous_state_path: String, data = {}) -> void:
 		
 	#mute footstep
 	CharacterPlayer.footstep_sound.volume_db = -100
+	
+	#add sound
+	CharacterPlayer.crouching_sound.play()
+	CharacterPlayer.crouching_sound.volume_db = -35
 		
 	CharacterPlayer.SPEED = CharacterPlayer.crouching_speed
 	print("crouching speed at: ", CharacterPlayer.SPEED)

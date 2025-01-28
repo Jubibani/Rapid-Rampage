@@ -1,11 +1,12 @@
 class_name CharacterPlayer extends CharacterBody3D
 
 @export var animation_player : AnimationPlayer
-@export_range(5.0, 5.0, 10.0)var animation_speed = 5.0
+@export_range(5.0, 5.0, 10.0)var animation_speed = 3.5
 var SPEED = walking_speed
 
 var is_running : bool = false
 var is_crouching : bool = false
+var is_on_air : bool = false
 var player_jumped: bool = false
 
 const running_speed = 10.0
@@ -31,6 +32,11 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 #sounds
 @onready var footstep_sound = $FootStepSound
 @onready var jumplanding_sound = $JumpLandSound
+@onready var crouching_sound = $CrouchSound
+@onready var proning_sound = $ProneSound
+@onready var standing_sound = $StandSound
+
+
 
 # Walking sound timer
 var time_since_step = 0.0
@@ -52,10 +58,13 @@ func _input(event):
 		head_rotation.x = clamp(head_rotation.x, -90, 90)
 		$head.rotation_degrees = head_rotation
 		
-func _physics_process(delta_time ):
+func _physics_process(delta_time):
+
+	
 	# Add the gravity.
 	if not is_on_floor():
-		velocity.y -= gravity * delta_time 
+		velocity.y -= gravity * delta_time
+		is_on_air = true 
 		
 
 	# Get the input direction and handle the movement/deceleration.
@@ -65,13 +74,21 @@ func _physics_process(delta_time ):
 	
 	#adding inertia to gravity
 	if is_on_floor():
+		if is_on_air:
+			jumplanding_sound.play()
+			jumplanding_sound.volume_db = -30
+			
+			#reset
+			is_on_air = false	
+		
+		
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 			
 			# Play footstep sound
-			footstep(delta_time )
-
+			footstep(delta_time)
+		
 		else:
 			#fix the movement momentum when we stop moving, the character stops in a weird manner with no momentum
 			velocity.x = lerp(velocity.x, direction.x * SPEED, delta_time  * 7.0)

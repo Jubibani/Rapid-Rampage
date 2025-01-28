@@ -12,7 +12,7 @@ func enter(previous_state_path: String, data := {}) -> void:
 	
 	#add footstep
 	CharacterPlayer.step_interval = 0.3 # Increased to simulate runnning
-	CharacterPlayer.footstep_sound.volume_db = -45
+	CharacterPlayer.footstep_sound.volume_db = -35
 
 
 func physics_update(_delta: float) -> void:
