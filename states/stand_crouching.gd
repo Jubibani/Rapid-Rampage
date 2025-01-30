@@ -36,10 +36,11 @@ func enter(previous_state_path: String, data = {}) -> void:
 	Input.action_release("Jump")
 	
 func physics_update(_delta: float) -> void:
-	if Input.is_action_just_pressed("crouch_or_uncrouch"):
+	if Input.is_action_just_pressed("crouch_or_uncrouch") or Input.is_action_just_pressed("Jump"):
 		crouchingFromStand = true
 		finished.emit(Standing)  # Transition back to standing
 		Input.action_release("crouch_or_uncrouch")
+		Input.action_release("Jump")
 		
 		
 	elif Input.is_action_just_pressed("prone_or_unprone"):
