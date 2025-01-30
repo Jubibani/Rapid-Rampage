@@ -2,8 +2,9 @@ class_name CharacterPlayer extends CharacterBody3D
 
 @export var animation_player : AnimationPlayer
 @export_range(5.0, 5.0, 10.0)var animation_speed = 3.5
-var SPEED = walking_speed
 
+#basic movements
+var SPEED = walking_speed
 var is_running : bool = false
 var is_crouching : bool = false
 var is_on_air : bool = false
@@ -23,6 +24,12 @@ var t_bob = 0.0
 #FOV
 const base_fov = 75.0
 const fov_change = 1.5
+
+#feature movements
+var is_wall_bouncing = false
+var last_wall_normal = Vector3.ZERO
+var wall_bounce_multiplier = 1.2
+
 
 
 @onready var camera = $head/Camera3D
@@ -44,10 +51,7 @@ var step_interval = 0.6
 
 var delta_time : float = 0.0 # make delta global
 
-
- 
 func _input(event):
-	
 	if event is InputEventScreenDrag:
 		var look_sensitivity = 0.5
 		rotate_y(deg_to_rad(-event.relative.x * look_sensitivity))
@@ -58,20 +62,17 @@ func _input(event):
 		head_rotation.x = clamp(head_rotation.x, -90, 90)
 		$head.rotation_degrees = head_rotation
 		
-func _physics_process(delta_time):
-
+func _physics_process(delta_time):	
+	# Get the input direction and handle the movement/deceleration.
+	# As good practice, you should replace UI actions with custom gameplay actions.
+	var input_dir = Input.get_vector("left", "right", "forward", "backward")
+	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
 	
 	# Add the gravity.
 	if not is_on_floor():
 		velocity.y -= gravity * delta_time
 		is_on_air = true 
 		
-
-	# Get the input direction and handle the movement/deceleration.
-	# As good practice, you should replace UI actions with custom gameplay actions.
-	var input_dir = Input.get_vector("left", "right", "forward", "backward")
-	var direction = (transform.basis * Vector3(input_dir.x, 0, input_dir.y)).normalized()
-	
 	#adding inertia to gravity
 	if is_on_floor():
 		if is_on_air:
@@ -80,15 +81,15 @@ func _physics_process(delta_time):
 			
 			#reset
 			is_on_air = false	
-		
-		
+			
 		if direction:
 			velocity.x = direction.x * SPEED
 			velocity.z = direction.z * SPEED
 			
 			# Play footstep sound
 			footstep(delta_time)
-		
+			
+			
 		else:
 			#fix the movement momentum when we stop moving, the character stops in a weird manner with no momentum
 			velocity.x = lerp(velocity.x, direction.x * SPEED, delta_time  * 7.0)
@@ -97,6 +98,13 @@ func _physics_process(delta_time):
 		#inertia
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta_time  * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta_time  * 3.0)
+		
+	#add wall bounce
+	if is_on_wall():
+		print("wall detected")
+		if Input.is_action_just_pressed("Jump"):
+			print("wall detected")
+			wall_bounce()
 		
 	#head bobbing
 	t_bob += delta_time  * velocity.length() * float(is_on_floor())
@@ -116,10 +124,21 @@ func _headbob(time) -> Vector3:
 	return pos
 		
 func footstep(delta_time ):
-
-	
 	time_since_step += delta_time 
 	if time_since_step >= step_interval:
 		footstep_sound.pitch_scale = randf() * 0.2 + 0.9
 		footstep_sound.play()
 		time_since_step = 0.0
+		
+func wall_bounce():
+	if is_on_wall():
+		last_wall_normal = get_wall_normal()  # Get direction of the wall
+		print("Wall Bounce Normal: ", last_wall_normal)  # Debugging
+
+		# Remove vertical component of the normal (prevents bouncing upwards)
+		last_wall_normal.y = 0
+		last_wall_normal = last_wall_normal.normalized()
+
+		# Apply bounce force in the wall's normal direction + some forward movement
+		velocity = (last_wall_normal * wall_bounce_multiplier * SPEED) + Vector3(0, JUMP_VELOCITY, 0)
+		is_wall_bouncing = true
