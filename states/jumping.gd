@@ -33,6 +33,7 @@ func physics_update(_delta: float) -> void:
 			proning = true
 			finished.emit(Proning) 
 			Input.action_release("prone_or_unprone")
+
 		
 			
 		if Input.is_action_just_pressed("run"):
