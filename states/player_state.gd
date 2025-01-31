@@ -22,6 +22,7 @@ const running_speed = 12.5
 
 #feature movements
 const WallBounce = "WallBounce"
+const Sliding = "sliding"
 
 #for debugging
 #var display_output = "crouching: %s, proning: %s" % [str(crouching), str(proning)]

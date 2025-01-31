@@ -28,7 +28,6 @@ func physics_update(_delta: float) -> void:
 			crouchingFromStand = true
 			finished.emit(StandCrouching)
 			Input.action_release("crouch_or_uncrouch")
-	
 
 		
 		
@@ -49,10 +48,11 @@ func physics_update(_delta: float) -> void:
 			Input.action_release("Jump")
 			
 	#add wall bounce
-	if CharacterPlayer.is_on_wall() and Input.is_action_just_pressed("Jump"):
-		print("wall detected")
-		finished.emit(WallBounce)
-		Input.action_release("Jump")
+	if !CharacterPlayer.is_on_floor() and CharacterPlayer.is_on_wall() and Input.is_action_just_pressed("Jump"):
+		print("wall detected, can wall bounce")
+		if CharacterPlayer.wall_bounce_availability > 0:
+			finished.emit(WallBounce)
+			Input.action_release("Jump")
 		
 		
 

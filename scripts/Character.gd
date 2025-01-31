@@ -29,9 +29,11 @@ const fov_change = 1.5
 var is_wall_bouncing = false
 var last_wall_normal = Vector3.ZERO
 var wall_bounce_multiplier = 1.2
-
 var wall_bounce_availability = 3
 const wall_boost = 8.0
+
+var is_sliding = false
+const sliding_boost = 3.5
 
 
 
@@ -45,7 +47,7 @@ var gravity = ProjectSettings.get_setting("physics/3d/default_gravity")
 @onready var crouching_sound = $CrouchSound
 @onready var proning_sound = $ProneSound
 @onready var standing_sound = $StandSound
-
+@onready var wallbounce_sound = $WallBounceSound
 
 
 # Walking sound timer
@@ -76,8 +78,11 @@ func _physics_process(delta_time):
 		velocity.y -= gravity * delta_time
 		is_on_air = true 
 		
-	#adding inertia to gravity
 	if is_on_floor():
+		#Reset bounces properly when landing (used in wall bounce script)
+		wall_bounce_availability = 3 
+		
+		#adding inertia to gravity
 		if is_on_air:
 			jumplanding_sound.play()
 			jumplanding_sound.volume_db = -30
@@ -102,12 +107,6 @@ func _physics_process(delta_time):
 		velocity.x = lerp(velocity.x, direction.x * SPEED, delta_time  * 3.0)
 		velocity.z = lerp(velocity.z, direction.z * SPEED, delta_time  * 3.0)
 		
-	##add wall bounce
-	#if is_on_wall():
-		#print("wall detected")
-		#if Input.is_action_just_pressed("Jump"):
-			#print("wall detected")
-			#wall_bounce()
 		
 	#head bobbing
 	t_bob += delta_time  * velocity.length() * float(is_on_floor())
@@ -132,16 +131,3 @@ func footstep(delta_time ):
 		footstep_sound.pitch_scale = randf() * 0.2 + 0.9
 		footstep_sound.play()
 		time_since_step = 0.0
-		#
-#func wall_bounce():
-	#if is_on_wall():
-		#last_wall_normal = get_wall_normal()  # Get direction of the wall
-		#print("Wall Bounce Normal: ", last_wall_normal)  # Debugging
-#
-		## Remove vertical component of the normal (prevents bouncing upwards)
-		#last_wall_normal.y = 0
-		#last_wall_normal = last_wall_normal.normalized()
-#
-		## Apply bounce force in the wall's normal direction + some forward movement
-		#velocity = (last_wall_normal * wall_bounce_multiplier * SPEED) + Vector3(0, wall_boost, 0)
-		#is_wall_bouncing = true
